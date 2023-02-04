@@ -6,7 +6,7 @@ agent:
     os_image: ubuntu1804
   containers:
     - name: main
-      image: 'semaphoreci/android:30.flutter'
+      image: 'semaphoreci/android:30-flutter'
 blocks:
   - name: Setup
     task:
