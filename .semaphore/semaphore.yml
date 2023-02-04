@@ -17,21 +17,11 @@ blocks:
             - 'cache restore flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
             - flutter pub get
             - 'cache store flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
-      prologue:
-        commands:
-          - checkout
-          - 'cache restore flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
-          - flutter pub get
     dependencies: []
   - name: Lint
     dependencies:
       - Setup
     task:
-      prologue:
-        commands:
-          - checkout
-          - 'cache restore flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
-          - flutter pub get
       jobs:
         - name: Format code
           commands:
@@ -43,11 +33,6 @@ blocks:
     dependencies:
       - Lint
     task:
-      prologue:
-        commands:
-          - checkout
-          - 'cache restore flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
-          - flutter pub get
       jobs:
         - name: Test code
           commands:
