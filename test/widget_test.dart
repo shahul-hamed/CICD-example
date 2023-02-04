@@ -30,7 +30,8 @@ void main() {
     await tester.enterText(email, "test@gmail.com");
     await tester.enterText(pass, "123456");
     await tester.tap(find.byKey(const Key('login')));
-    log("login test completed");
+    await tester.pumpAndSettle(Duration(seconds: 1));
+    debugPrint("login test completed");
   });
 }
 class _MyHttpOverrides extends HttpOverrides {}
