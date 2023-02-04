@@ -36,4 +36,4 @@ blocks:
       jobs:
         - name: Test code
           commands:
-            - flutter test test
+            - flutter test
