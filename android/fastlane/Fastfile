@@ -16,20 +16,19 @@
 default_platform(:android)
 
 platform :android do
-  desc "Deploy to firebase"
-  lane :upload_to_firebase
-   begin
+ desc "Deploy to firebase"
+ lane :deploy do
+  begin
    #Step 1 — Build your app, my suggestion is gym
    #Step 2 — Upload to firebase app distribution
    firebase_app_distribution(
-     app: “1:420275361426:android:4ac04a63d0dafee4a5f84b”,
-     groups: “alpha”,
-     release_notes: “Code improvements”,
-     apk_path: "../build/app/outputs/flutter-apk/app-release.apk"
-     firebase_cli_path: “C:\Users\webar\AppData\Roaming\npm”,
-     firebase_cli_token: “1//0g6Zu5k5rHv9gCgYIARAAGBASNwF-L9IrvYeQwjeGE6VybvTfGbZJ5Rn_sAIbd3xPWUrXHdS-q-UZ0wkqVirVhaQiRkoSKhcaiQI”,
-
-    )
-   end
+    app: “1:420275361426:android:4ac04a63d0dafee4a5f84b”,
+    groups: “alpha”,
+    release_notes: “Code improvements”,
+    apk_path: "../build/app/outputs/flutter-apk/app-release.apk",
+    firebase_cli_path: “C:\Users\webar\AppData\Roaming\npm”,
+    firebase_cli_token: “1//0g6Zu5k5rHv9gCgYIARAAGBASNwF-L9IrvYeQwjeGE6VybvTfGbZJ5Rn_sAIbd3xPWUrXHdS-q-UZ0wkqVirVhaQiRkoSKhcaiQI”,
+   )
   end
+ end
 end
