@@ -19,3 +19,4 @@ blocks:
           - cd android
           - bundle install
           - cache store
+          - flutter install
