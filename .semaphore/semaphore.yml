@@ -1,0 +1,53 @@
+version: v1.0
+name: Continuous Integration Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+  containers:
+    - name: main
+      image: 'semaphoreci/android:30-flutter'
+blocks:
+  - name: Setup
+    task:
+      jobs:
+        - name: Install dependencies
+          commands:
+            - checkout
+            - 'cache restore flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
+            - flutter pub get
+            - 'cache store flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
+    dependencies: []
+  - name: Lint
+    dependencies:
+      - Setup
+    task:
+      jobs:
+        - name: Format code
+          commands:
+            - flutter format --set-exit-if-changed .
+        - name: Analyze code
+          commands:
+            - flutter analyze .
+  - name: Test
+    dependencies:
+      - Lint
+    task:
+      jobs:
+        - name: Test code
+          commands:
+            - flutter test test
+      prologue:
+        commands:
+          - checkout
+          - 'cache restore flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
+          - flutter pub get
+promotions:
+  - name: Build App
+    pipeline_file: pipeline_2.yml
+    auto_promote:
+      when: branch = 'main' AND result = 'passed'
+  - name: Deploy to Firebase
+    pipeline_file: pipeline_3.yml
+    auto_promote:
+      when: branch = 'main' AND result = 'passed'

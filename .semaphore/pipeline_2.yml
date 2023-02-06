@@ -1,0 +1,21 @@
+version: v1.0
+name: 'Continuous Deployment Pipeline: Build Artifact'
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
+  containers:
+    - name: main
+      image: 'semaphoreci/android:30-flutter'
+blocks:
+  - name: Build
+    task:
+      jobs:
+        - name: Build Android APK
+          commands:
+            - flutter build apk --release
+      prologue:
+        commands:
+          - checkout
+          - 'cache restore flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
+          - flutter pub get
