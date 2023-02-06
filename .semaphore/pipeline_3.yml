@@ -19,4 +19,4 @@ blocks:
           - cd android
           - bundle install
           - cache store
-          - sudo snap install flutter
+          - sudo snap install flutter --classic
