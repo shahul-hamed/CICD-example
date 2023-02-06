@@ -19,4 +19,3 @@ blocks:
           - cd android
           - bundle install
           - cache store
-          - cd..
