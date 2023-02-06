@@ -42,3 +42,12 @@ blocks:
           - checkout
           - 'cache restore flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
           - flutter pub get
+promotions:
+  - name: Build App
+    pipeline_file: pipeline_2.yml
+    auto_promote:
+      when: branch = 'main' AND result = 'passed'
+  - name: Deploy to Firebase
+    pipeline_file: pipeline_3.yml
+    auto_promote:
+      when: branch = 'main' AND result = 'passed'
