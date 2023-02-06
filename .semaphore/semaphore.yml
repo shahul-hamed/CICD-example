@@ -37,3 +37,8 @@ blocks:
         - name: Test code
           commands:
             - flutter test test
+      prologue:
+        commands:
+          - checkout
+          - 'cache restore flutter-packages-$SEMAPHORE_GIT_BRANCH-$(checksum pubspec.yaml),flutter-packages-$(checksum pubspec.yaml),flutter-packages'
+          - flutter pub get
