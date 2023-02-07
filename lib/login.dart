@@ -15,7 +15,7 @@ class LoginState extends State<Login> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Login Page"),
+        title: const Text("Login"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -42,7 +42,7 @@ class LoginState extends State<Login> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
-                    hintText: 'Enter valid email id as abc@gmail.com'),
+                    hintText: 'Enter valid email id '),
               ),
             ),
             const Padding(
@@ -55,7 +55,7 @@ class LoginState extends State<Login> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Password',
-                    hintText: 'Enter secure password'),
+                    hintText: 'Enter password'),
               ),
             ),
             const SizedBox(height: 40,),

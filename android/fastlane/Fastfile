@@ -24,7 +24,7 @@ platform :android do
    firebase_app_distribution(
     app: “1:420275361426:android:4ac04a63d0dafee4a5f84b”,
     groups: “alpha”,
-    release_notes: “Code improvements”,
+    release_notes: “CICD Example using semaphore - fastlane”,
     apk_path: "../build/app/outputs/flutter-apk/app-release.apk",
     firebase_cli_path: “C:\Users\webar\AppData\Roaming\npm”,
     firebase_cli_token: “1//0g6Zu5k5rHv9gCgYIARAAGBASNwF-L9IrvYeQwjeGE6VybvTfGbZJ5Rn_sAIbd3xPWUrXHdS-q-UZ0wkqVirVhaQiRkoSKhcaiQI”,
