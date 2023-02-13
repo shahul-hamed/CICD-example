@@ -1,81 +1,41 @@
-pipeline {
-    agent { label 'built-in' }
-    stages {
 
-        stage ('TEST BUILD AND DEPLOYMENT') {
-            steps
-            {
-                script
-                {
-                  //get comments programmatically
-                    env.GIT_COMMIT_MSG = sh (script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
-                    //by default testing will be done
-                    dir('weather_rx_stream_sink') {
-                        testCodeQuality()
-                    }
-                    if (env.GIT_COMMIT_MSG == 'BUILD IOS') {
-                    dir('weather_rx_stream_sink') { buildiOS() }
-                    } else if (env.GIT_COMMIT_MSG == 'BUILD ANDROID'){
-                    dir('weather_rx_stream_sink') { buildAndroid() }
-                    } else if (env.GIT_COMMIT_MSG == 'DEPLOY IOS') {
-                    dir('weather_rx_stream_sink') { buildiOS() }
-                    dir('weather_rx_stream_sink/ios') { distributeiOS() }
-                    } else if (env.GIT_COMMIT_MSG == 'DEPLOY ANDROID') {
-                    dir('weather_rx_stream_sink') { buildAndroid() }
-                    dir('weather_rx_stream_sink/android') { distriButeAndroid() }
-                    } else if (env.GIT_COMMIT_MSG == 'DEPLOY BOTH') {
-                    dir('weather_rx_stream_sink') { buildiOS() }
-                    dir('weather_rx_stream_sink/ios') { distributeiOS() }
-                    dir('weather_rx_stream_sink') { buildAndroid() }
-                    dir('weather_rx_stream_sink/android') { distriButeAndroid() }
-                    }
-                }
+
+pipeline {
+    agent { label 'built-in' } //Change this to whatever your flutter jenkins nodes are labeled.
+    environment {
+        DEVELOPER_DIR="/Applications/Xcode.app/Contents/Developer/"  //This is necessary for Fastlane to access iOS Build things.
+        PATH = "/Users/jenkins/.rbenv/shims:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/jenkins/Documents/flutter/bin:/usr/local/Caskroom/android-sdk/4333796//tools:/usr/local/Caskroom/android-sdk/4333796//platform-tools:/Applications/Xcode.app/Contents/Developer"
+    }
+    stages {
+        stage ('Checkout') {
+            steps {
+                step([$class: 'WsCleanup'])
+                checkout scm
+                sh "rm -rf brbuild_ios" //This removes the previous checkout of brbuild_ios if it exists.
+                sh "rm -rf ios/fastlane/brbuild_ios" //This removes the brbuild_ios from the fastlane directory if it somehow still exists
+                sh "GIT_SSH_COMMAND='ssh -i ~/.ssh/ios_dependencies' git clone --depth 1 git@bitbucket.org:BottleRocket/brbuild_ios.git" //This checks out the brbuild_ios library from BottleRocket's Bitbucket
+                sh "mv brbuild_ios ios/fastlane" //This moves the just checked out brbuild_ios to the fastlane directory for easier importing
             }
         }
+        stage ('Flutter Doctor') {
+            steps {
+                sh "flutter doctor -v"
+            }
+        }
+        stage ('Run Flutter Tests') {
+            steps {
+                sh "flutter test --coverage test/logic_tests.dart"
+            }
+        }
+        stage('Cleanup') {
+                   steps {
+                       sh "flutter clean"
+                   }
+        }
+        stage ('Flutter Build APK') {
+            steps {
+                sh "flutter build apk --release"
+            }
+        }
+
     }
-}
-
-//if commit message does not includes BUILD IOS'/'BUILD ANDROID'/'DEPLOY IOS'/'DEPLOY ANDROID'/'DEPLOY BOTH'
-void testCodeQuality() {
-
-    echo "TESTING STARTED"
-    sh "flutter test --coverage"
-    sh "genhtml coverage/lcov.info -o coverage/"
-    publishHTML (target : [allowMissing: false,
-    alwaysLinkToLastBuild: true,
-    keepAll: true,
-    reportDir: 'coverage',
-    reportFiles: 'index.html',
-    reportName: 'My Reports',
-    reportTitles: 'The Report'])
-    echo "TESTING END"
-    }
-
-void buildiOS() {
-    echo "BUILDING IOS  STARTED"
-    sh "flutter build ios"
-    echo "BUILDING IOS  END"
-}
-
-void distributeiOS() {
-    echo "FASTLANE  STARTED"
-    sh 'fastlane beta'
-    echo "FASTLANE  END"
-}
-
-void buildAndroid() {
-    echo "BUILDING APK  STARTED"
-    sh "flutter build apk"
-    echo "BUILDING APK  END"
-}
-
-void distriButeAndroid() {
-    echo "FASTLANE  STARTED"
-    //use gradle if fastlane not supported (headless linux)
-    //sh './gradlew clean build'
-    //sh './gradlew assembleRelease appDistributionUploadRelease'
-
-  //for mac (tested on mac not sure on window)
-    sh 'fastlane beta'
-    echo "FASTLANE  END"
-}
