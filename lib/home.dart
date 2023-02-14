@@ -25,7 +25,7 @@ class SuccessPageState extends State<SuccessPage> {
           Icon(Icons.thumb_up_alt_sharp,color: Colors.green,size: 45,),
           SizedBox(height: 30,),
           Text(
-            'You have successfully logged in',
+            'You have successfully logged in',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 20),
           ),
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
