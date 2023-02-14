@@ -10,7 +10,6 @@ class SuccessPage extends StatefulWidget {
 }
 
 class SuccessPageState extends State<SuccessPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

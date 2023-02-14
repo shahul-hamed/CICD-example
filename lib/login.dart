@@ -33,7 +33,9 @@ class LoginState extends State<Login> {
                     child: Image.asset('images/login.png')),
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             const Padding(
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -46,8 +48,8 @@ class LoginState extends State<Login> {
               ),
             ),
             const Padding(
-              padding: EdgeInsets.only(
-                  left: 20.0, right: 20.0, top: 15, bottom: 0),
+              padding:
+                  EdgeInsets.only(left: 20.0, right: 20.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                 key: Key("password"),
@@ -58,7 +60,9 @@ class LoginState extends State<Login> {
                     hintText: 'Enter password'),
               ),
             ),
-            const SizedBox(height: 40,),
+            const SizedBox(
+              height: 40,
+            ),
             Container(
               height: 50,
               width: 290,
@@ -68,7 +72,11 @@ class LoginState extends State<Login> {
                 key: const Key('login'),
                 onPressed: () {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => const SuccessPage(title: "Success",)));
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const SuccessPage(
+                                title: "Success",
+                              )));
                 },
                 child: const Text(
                   'Login',
