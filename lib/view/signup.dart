@@ -1,4 +1,4 @@
-import 'package:cicd_example/login.dart';
+import 'package:cicd_example/view/login.dart';
 import 'package:flutter/material.dart';
 
 import 'home.dart';
