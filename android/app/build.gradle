@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-
+apply plugin: 'com.google.firebase.appdistribution'
 android {
     compileSdkVersion 33
 
@@ -63,6 +63,12 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             crunchPngs false // or true
             signingConfig signingConfigs.debug
+            firebaseAppDistribution {
+                appId = "1:420275361426:android:4ac04a63d0dafee4a5f84b" /// mobile sdk app id from googleservices.json
+                releaseNotes = "CICD operation example using Jenkins"
+                serviceCredentialsFile = System.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+                groups="alpha"
+            }
         }
     }
 }
