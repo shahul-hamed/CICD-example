@@ -38,7 +38,6 @@ class SignUpState extends State<SignUp> {
               height: 10,
             ),
             const Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: TextField(
                 key: Key("name"),
@@ -49,8 +48,7 @@ class SignUpState extends State<SignUp> {
               ),
             ),
             const Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.only(left:20.0,right: 20.0,top:15,bottom: 0),
               child: TextField(
                 key: Key("email"),
                 decoration: InputDecoration(

@@ -18,12 +18,16 @@ class SuccessPageState extends State<SuccessPage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: const Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Text(
-          'You have successfully logged in',
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Icon(Icons.thumb_up_alt_sharp,color: Colors.green,size: 45,),
+          SizedBox(height: 30,),
+          Text(
+            'You have successfully logged in',
+          ),
+        ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
