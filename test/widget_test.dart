@@ -8,7 +8,7 @@
 import 'dart:io';
 
 import 'package:cicd_example/main.dart';
-import 'package:cicd_example/signup.dart';
+import 'package:cicd_example/view/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -29,8 +29,9 @@ void main() {
     expect(pass, findsOneWidget);
     await tester.enterText(email, "test@gmail.com");
     await tester.enterText(pass, "123456");
-    // await tester.tap(find.byKey(const Key('login')));
-    // await tester.pumpAndSettle(const Duration(seconds: 1));
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.tap(find.byKey(const Key('login')),warnIfMissed: false);
+    await tester.pumpAndSettle(const Duration(seconds: 1));
     debugPrint("login test completed");
   });
   testWidgets('Sign up widgets smoke test', (WidgetTester tester) async {
@@ -50,8 +51,9 @@ void main() {
     await tester.enterText(email, "tester");
     await tester.enterText(email, "test1@gmail.com");
     await tester.enterText(pass, "123456");
-    // await tester.tap(find.byKey(const Key('login')));
-    // await tester.pumpAndSettle(const Duration(seconds: 1));
+    await tester.testTextInput.receiveAction(TextInputAction.done);
+    await tester.tap(find.byKey(const Key('signup'),),warnIfMissed: false);
+    await tester.pumpAndSettle(const Duration(seconds: 1));
     debugPrint("account creation test completed");
   });
 }
