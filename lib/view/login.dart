@@ -80,7 +80,7 @@ class LoginState extends State<Login> {
                               )));
                 },
                 child: const Text(
-                  'Login',
+                  'Sign in',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
